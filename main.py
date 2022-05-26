@@ -1,3 +1,5 @@
+from lib2to3.pgen2.pgen import generate_grammar
+from tokenize import generate_tokens
 from routers import example
 from routers import roles
 from routers import users
@@ -16,6 +18,17 @@ from fastapi.openapi.docs import (
     get_swagger_ui_html,
     get_swagger_ui_oauth2_redirect_html
 )
+
+
+import os
+
+from fastapi import FastAPI 
+from fastapi import FastAPI, File, UploadFile, FastAPI
+from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
+import string
+import secrets
+
 
 import uvicorn
 import config
@@ -60,6 +73,32 @@ async def redoc_html():
         title=app.title + " - ReDoc",
         redoc_js_url=f"{config.STATICFILES_URL_PREFIX}/static/redoc.standalone.js",
     )
+
+
+# files stuff
+
+def save_file(filename, data):
+    with open(filename, 'wb') as f:
+        f.write(data)
+        print('file saved')
+
+@app.post("/upload")
+async def upload(file: UploadFile = File(...)):
+    print(file)
+    contents = await file.read()
+    name= ''.join(secrets.choice(string.ascii_letters + string.digits) for x in range(20)) 
+    name= name+'.pdf'
+    save_file("files/"+name, contents)
+    return name
+
+@app.get("/download")
+async def download(name: str): 
+    return FileResponse(
+                "files/"+name,
+                media_type="application/pdf",
+                filename=name)
+    #path = "files/"+ name 
+    #return FileResponse(path, media_type='application/pdf',filename=name)
 
 # Роутеры
 app.include_router(example.router, prefix=config.EXAMPLE_PREFIX, tags=['example'])

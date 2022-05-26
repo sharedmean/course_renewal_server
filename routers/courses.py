@@ -139,7 +139,7 @@ async def get_finished_courses_by_tutor(request: Request, id: int):
     
     try:
         query = f"""
-        SELECT id, name, hours, price, form, to_char(start_date, 'DD.MM.YYYY') AS start_date, to_char(end_date, 'DD.MM.YYYY') AS end_date, tutor_id, schedule
+        SELECT id, name, hours, price, form, to_char(start_date, 'DD.MM.YYYY') AS start_date, to_char(end_date, 'DD.MM.YYYY') AS end_date, tutor_id, schedule, program
         FROM {courses_table} WHERE end_date < current_date AND tutor_id={id}
         ORDER BY id desc
         """
@@ -171,7 +171,7 @@ async def get_upcoming_courses(request: Request):
     
     try:
         query = f"""
-        SELECT id, name, hours, price, form, to_char(start_date, 'DD.MM.YYYY') AS start_date, to_char(end_date, 'DD.MM.YYYY') AS end_date, schedule, tutor_id
+        SELECT id, name, hours, price, form, to_char(start_date, 'DD.MM.YYYY') AS start_date, to_char(end_date, 'DD.MM.YYYY') AS end_date, schedule, tutor_id, program
         FROM {courses_table} WHERE end_date > current_date AND start_date > current_date
         """
         result = await database.fetch_all(query)            # Выполнение запроса
@@ -202,7 +202,7 @@ async def get_current_courses(request: Request):
     
     try:
         query = f"""
-        SELECT id, name, hours, price, form, to_char(start_date, 'DD.MM.YYYY') AS start_date, to_char(end_date, 'DD.MM.YYYY') AS end_date, schedule, tutor_id
+        SELECT id, name, hours, price, form, to_char(start_date, 'DD.MM.YYYY') AS start_date, to_char(end_date, 'DD.MM.YYYY') AS end_date, schedule, tutor_id, program
         FROM {courses_table} WHERE end_date > current_date AND start_date <= current_date
         """
         result = await database.fetch_all(query)            # Выполнение запроса
