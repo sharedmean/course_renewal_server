@@ -26,6 +26,7 @@ AGREEMENTS_PREFIX = '/agreements'
 INVOICES_PREFIX = '/invoices'
 LISTENERS_AGREEMENTS_PREFIX = '/listeners_agreements'
 ORGANIZATIONS_PREFIX = '/organizations'
+HOMEWORKS_PREFIX = '/homeworks'
 
 #### CORS ####
 

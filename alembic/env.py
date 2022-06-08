@@ -14,6 +14,7 @@ from models import partnership_agreements
 from models import agreements
 from models import invoices
 from models import listeners_agreements
+from models import homework
 
 from alembic import context
 
@@ -36,7 +37,7 @@ fileConfig(config.config_file_name)
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = [example.metadata, roles.metadata, users.metadata, documents.metadata, courses.metadata, listeners_courses.metadata, organizations.metadata, partnership_agreements.metadata, agreements.metadata, invoices.metadata, listeners_agreements.metadata]
+target_metadata = [example.metadata, roles.metadata, users.metadata, documents.metadata, courses.metadata, listeners_courses.metadata, organizations.metadata, partnership_agreements.metadata, agreements.metadata, invoices.metadata, listeners_agreements.metadata, homework.metadata]
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:

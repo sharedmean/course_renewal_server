@@ -10,6 +10,7 @@ from routers import agreements
 from routers import invoices
 from routers import listeners_agreements
 from routers import organizations
+from routers import homework
 from fastapi.middleware.cors import CORSMiddleware
 from models.database import database
 from fastapi import FastAPI
@@ -77,6 +78,14 @@ async def redoc_html():
 
 # files stuff
 
+def delete_file(name):
+    os.remove(name)
+
+@app.get("/delete")
+async def delete(name: str):
+    delete_file("files/"+name)
+    return name
+
 def save_file(filename, data):
     with open(filename, 'wb') as f:
         f.write(data)
@@ -111,7 +120,7 @@ app.include_router(agreements.router, prefix=config.AGREEMENTS_PREFIX, tags=['ag
 app.include_router(invoices.router, prefix=config.INVOICES_PREFIX, tags=['invoices'])
 app.include_router(listeners_agreements.router, prefix=config.LISTENERS_AGREEMENTS_PREFIX, tags=['listeners_agreements'])
 app.include_router(organizations.router, prefix=config.ORGANIZATIONS_PREFIX, tags=['organizations'])
-
+app.include_router(homework.router, prefix=config.HOMEWORKS_PREFIX, tags=['homeworks'])
 
 # Запуск приложения
 if __name__ == '__main__':

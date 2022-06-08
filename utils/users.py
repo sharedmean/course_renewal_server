@@ -43,7 +43,7 @@ def validate_password(password: str, password_hash:str):
 async def create_user_token(user_id: int):
     query = (
         tokens_table.insert()
-        .values(expires=datetime.now() + timedelta(weeks=2), user_id=user_id)
+        .values(expires=datetime.now() + timedelta(hours=8), user_id=user_id)
         .returning(tokens_table.c.token, tokens_table.c.expires)
     )
 
